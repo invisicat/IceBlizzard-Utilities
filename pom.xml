@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.iceblizzard</groupId>
-    <artifactId>IceBlizzardUtilities</artifactId>
+    <artifactId>iceblizzardutilities</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
