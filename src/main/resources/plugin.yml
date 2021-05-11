@@ -1,0 +1,6 @@
+main: dev.blizzardutils.example.ExamplePlugin
+version: 1.0.0
+name: BlizzardUtils
+commands:
+  iceutilsexample:
+    description: "Example Command"

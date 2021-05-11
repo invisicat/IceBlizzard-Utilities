@@ -36,7 +36,7 @@ public class KronosRunnables {
         private final Consumer<C> consumer;
         private final C value;
 
-        ConsumerRunnable(KronosChain.KronosChainBuilder<K> kronosChainBuilder, Consumer<C> consumer, C value) {
+        public ConsumerRunnable(KronosChain.KronosChainBuilder<K> kronosChainBuilder, Consumer<C> consumer, C value) {
             super(kronosChainBuilder);
             this.consumer = consumer;
             this.value = value;

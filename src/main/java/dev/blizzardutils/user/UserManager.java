@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class UserManager {
 
+
     private final Map<String, User> userMap = Maps.newConcurrentMap();
 
 
