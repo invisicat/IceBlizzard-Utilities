@@ -25,7 +25,7 @@ public class KronosChain {
             return instance;
         }
 
-        public KronosChainBuilder<K> init(CompletableFuture<K> completableFuture) {
+        private KronosChainBuilder<K> init(CompletableFuture<K> completableFuture) {
             this.completableFuture = completableFuture;
             sync.set(false);
             async.set(false);
