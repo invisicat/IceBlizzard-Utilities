@@ -5,22 +5,24 @@ import org.bukkit.Bukkit;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 
 public class KronosChain {
 
 
     public static class KronosChainBuilder<K> {
 
-        private CompletableFuture<K> completableFuture = null;
+        private static KronosChainBuilder instance = null;
+        private CompletableFuture<K> completableFuture;
         private AtomicBoolean sync = new AtomicBoolean(false);
         private AtomicBoolean async = new AtomicBoolean(false);
         private AtomicBoolean hasStopped = new AtomicBoolean(false);
 
-        public static KronosChainBuilder getInstance() {
-            return new KronosChainBuilder<>();
+        public static synchronized KronosChainBuilder getInstance() {
+            if (instance == null) {
+                instance = new KronosChainBuilder();
+            }
+
+            return instance;
         }
 
         public KronosChainBuilder<K> init(CompletableFuture<K> completableFuture) {
