@@ -14,6 +14,8 @@ public class ItemBuilder {
 
     public static class Builder {
 
+        private static Builder instance = null;
+
         private Material material;
 
         private int amount;
@@ -26,8 +28,9 @@ public class ItemBuilder {
 
         private Map<Enchantment, Integer> enchantmentMap;
 
-        public static Builder getInstance() {
-            return new Builder();
+        public static synchronized Builder getInstance() {
+            if (instance == null) instance = new Builder();
+            return instance;
         }
 
         public Builder itemType(Material material) {
@@ -96,6 +99,24 @@ public class ItemBuilder {
             meta.setLore(lore);
             item.setItemMeta(meta);
             return item;
+        }
+
+        /*
+
+        @Utility method used to check if item is null or not. Good for interact or inventory listeners.
+
+         */
+        public static boolean hasDisplayName(ItemStack currentitem) {
+            if (currentitem == null) {
+                return false;
+            }
+            if (!currentitem.hasItemMeta()) {
+                return false;
+            }
+            if (!currentitem.getItemMeta().hasDisplayName()) {
+                return false;
+            }
+            return true;
         }
     }
 }
