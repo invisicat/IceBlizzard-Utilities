@@ -10,8 +10,23 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class HikariSetup {
+
     private HikariDataSource dataSource;
-    private final Configuration config = JavaPlugin.getPlugin(ExamplePlugin.class).getConfig();
+
+    // Hikari Settings
+    private String host;
+    private int port;
+    private String database;
+    private String username;
+    private String password;
+
+    public HikariSetup(String host, int port, String database, String username, String password) {
+        this.host = host;
+        this.port = port;
+        this.database = database;
+        this.username = username;
+        this.password = password;
+    }
 
     public void connectToDatabase() {
         dataSource = new HikariDataSource();
@@ -28,6 +43,20 @@ public class HikariSetup {
     }
 
     /**
+     * Run a query asynchronously
+     * @param statement
+     */
+    public void runAsyncQuery(String statement) {
+        try(Connection conn = dataSource.getConnection()) {
+            try(PreparedStatement preparedStatement = conn.prepareStatement(statement)) {
+                preparedStatement.executeQuery();
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Create a table
      * @param tableName Prepared Statement
      */
@@ -40,16 +69,17 @@ public class HikariSetup {
             e.printStackTrace();
         }
     }
+
     /**
      * Sets default settings for hikari
      */
     private void setDataSourceSettings() {
         dataSource.setMaximumPoolSize(3);
         dataSource.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        dataSource.addDataSourceProperty("serverName", config.getString("host"));
-        dataSource.addDataSourceProperty("port", config.getInt("port"));
-        dataSource.addDataSourceProperty("databaseName", config.getString("database"));
-        dataSource.addDataSourceProperty("user", config.getString("username"));
-        dataSource.addDataSourceProperty("password", config.getString("password"));
+        dataSource.addDataSourceProperty("serverName", host);
+        dataSource.addDataSourceProperty("port", port);
+        dataSource.addDataSourceProperty("databaseName", database);
+        dataSource.addDataSourceProperty("user", username);
+        dataSource.addDataSourceProperty("password", password);
     }
 }
