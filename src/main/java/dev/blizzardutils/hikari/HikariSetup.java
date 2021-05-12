@@ -45,21 +45,6 @@ public class HikariSetup {
     }
 
     /**
-     * Run a query asynchronously
-     *
-     * @param statement
-     */
-    public void runAsyncQuery(String statement) {
-        try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement preparedStatement = conn.prepareStatement(statement)) {
-                preparedStatement.executeQuery();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Create a table
      *
      * @param tableName Prepared Statement
