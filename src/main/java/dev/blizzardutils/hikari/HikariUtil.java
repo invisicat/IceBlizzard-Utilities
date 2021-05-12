@@ -14,7 +14,7 @@ public class HikariUtil {
         return instance;
     }
     public int get(String name, String getTable, String resultSetID) {
-        try (Connection connection = /* */) {
+        try (Connection connection = HikariSetup.getInstance().getDataSource().getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(getTable)) {
                 preparedStatement.setString(1, name);
                 try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -30,7 +30,7 @@ public class HikariUtil {
 
     public void set(String name, String getTable, String resultSetID, int amount, String insert, String update) {
         if (get(name, getTable, resultSetID) == -1) {
-            try (Connection connection = /* */) {
+            try (Connection connection = HikariSetup.getInstance().getDataSource().getConnection()) {
                 try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
                     preparedStatement.setString(1, name);
                     preparedStatement.setInt(2, amount);
@@ -39,7 +39,7 @@ public class HikariUtil {
                 ex.printStackTrace();
             }
         } else {
-            try (Connection connection = /* */) {
+            try (Connection connection = HikariSetup.getInstance().getDataSource().getConnection()) {
                 try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
                     preparedStatement.setInt(1, amount);
                     preparedStatement.setString(2, name);

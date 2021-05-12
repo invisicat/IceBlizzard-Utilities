@@ -71,4 +71,8 @@ public class HikariSetup {
         dataSource.addDataSourceProperty("user", username);
         dataSource.addDataSourceProperty("password", password);
     }
+
+    public HikariDataSource getDataSource(){
+        return dataSource;
+    }
 }
