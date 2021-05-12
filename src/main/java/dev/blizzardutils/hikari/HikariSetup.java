@@ -1,12 +1,8 @@
 package dev.blizzardutils.hikari;
 
 import com.zaxxer.hikari.HikariDataSource;
-import dev.blizzardutils.example.ExamplePlugin;
 import dev.blizzardutils.string.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
