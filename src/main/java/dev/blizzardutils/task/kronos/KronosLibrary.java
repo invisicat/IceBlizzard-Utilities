@@ -3,6 +3,7 @@ package dev.blizzardutils.task.kronos;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -74,6 +75,21 @@ public class KronosLibrary<K> {
 
     public KronosLibrary<K> callBukkitDelayedAsyncTask(Plugin plugin, Runnable runnable, long delay) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, runnable, delay);
+        return this;
+    }
+
+    public KronosLibrary<K> callSyncMethod(Plugin plugin, Callable<K> callable) {
+        Bukkit.getScheduler().callSyncMethod(plugin, callable);
+        return this;
+    }
+
+    public KronosLibrary<K> callSyncTaskTimer(Plugin plugin, Runnable runnable, long l1, long l2) {
+        Bukkit.getScheduler().runTaskTimer(plugin, runnable, l1, l2);
+        return this;
+    }
+
+    public KronosLibrary<K> callAsyncTask(Plugin plugin, Runnable runnable, long l1, long l2) {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, runnable, l1, l2);
         return this;
     }
 }
