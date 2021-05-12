@@ -2,8 +2,7 @@ package dev.blizzardutils.example;
 
 import dev.blizzardutils.builder.ItemBuilder;
 import dev.blizzardutils.string.StringUtils;
-import dev.blizzardutils.task.kronos.KronosChain;
-import dev.blizzardutils.task.kronos.KronosRunnables;
+import dev.blizzardutils.task.kronos.KronosLibrary;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,9 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 
 public class ExamplePlugin extends JavaPlugin {
 
@@ -43,12 +40,7 @@ public class ExamplePlugin extends JavaPlugin {
             enchantMap.put(Enchantment.DURABILITY, 5);
             player.getInventory().addItem(ItemBuilder.Builder.getInstance().itemType(Material.SNOW_BALL).itemAmount(1).itemName(StringUtils.format("&6Snowball"))
                     .itemEnchant(enchantMap).itemLore(lore).buildWithEnchants());
-            KronosChain.KronosChainBuilder.getInstance().createNewChain(CompletableFuture.completedFuture(true)).runSync(
-                    new KronosRunnables.ConsumerRunnable<>(KronosChain.KronosChainBuilder.getInstance(),
-                            (Consumer<Object>) o -> player.sendMessage("This is a Kronos Test. This running Sync"), true));
-            return true;
         }
-
         return true;
     }
 }
