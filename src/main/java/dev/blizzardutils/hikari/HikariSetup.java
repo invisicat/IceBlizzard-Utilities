@@ -27,6 +27,10 @@ public class HikariSetup {
 
     }
 
+    /**
+     * Create a table
+     * @param tableName Prepared Statement
+     */
     private void createTable(String tableName) {
         try(Connection conn = dataSource.getConnection()) {
             try(PreparedStatement statement = conn.prepareStatement(tableName)) {
