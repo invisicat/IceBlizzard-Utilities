@@ -82,4 +82,14 @@ public class KronosLibrary<K> {
         Bukkit.getScheduler().callSyncMethod(plugin, callable);
         return this;
     }
+
+    public KronosLibrary<K> callSyncTimer(Plugin plugin, Runnable runnable, long l1, long l2) {
+        Bukkit.getScheduler().runTaskTimer(plugin, runnable, l1, l2);
+        return this;
+    }
+
+    public KronosLibrary<K> callAsyncTimer(Plugin plugin, Runnable runnable, long l1, long l2) {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, runnable, l1, l2);
+        return this;
+    }
 }
