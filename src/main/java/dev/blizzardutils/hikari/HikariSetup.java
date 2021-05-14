@@ -3,9 +3,12 @@ package dev.blizzardutils.hikari;
 import com.zaxxer.hikari.HikariDataSource;
 import dev.blizzardutils.string.StringUtils;
 import org.bukkit.Bukkit;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class HikariSetup {
 
@@ -24,7 +27,7 @@ public class HikariSetup {
         return instance;
     }
 
-    public void connectToDatabase(String host, int port, String database, String username, String password) {
+    public HikariSetup init(String host, int port, String database, String username, String password, String... tables) {
         this.host = host;
         this.port = port;
         this.database = database;
@@ -32,32 +35,11 @@ public class HikariSetup {
         this.password = password;
         dataSource = new HikariDataSource();
         setDataSourceSettings();
-        registerDefaultTables();
+        createTable(tables);
         Bukkit.getConsoleSender().sendMessage(StringUtils.format("&bBlizzard Utilities &7made a &aConnection&7!"));
+        return this;
     }
 
-    /**
-     * Register tables in the database
-     */
-    private void registerDefaultTables() {
-        // Register tables
-
-    }
-
-    /**
-     * Create a table
-     *
-     * @param tableName Prepared Statement
-     */
-    private void createTable(String tableName) {
-        try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement statement = conn.prepareStatement(tableName)) {
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Sets default settings for hikari
@@ -72,7 +54,24 @@ public class HikariSetup {
         dataSource.addDataSourceProperty("password", password);
     }
 
-    public HikariDataSource getDataSource(){
+    /**
+     * Create a table
+     *
+     * @param tableName Prepared Statement
+     */
+    public HikariSetup createTable(String... tableName) {
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement statement = conn.prepareStatement(Arrays.toString(tableName))) {
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return this;
+    }
+
+    public HikariDataSource getDataSource() {
         return dataSource;
     }
 }
