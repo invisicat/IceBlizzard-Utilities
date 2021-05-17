@@ -21,7 +21,7 @@ public class KronosLibrary<K> {
         return this;
     }
 
-    public KronosLibrary<K> createNewChainWithExecutorService(K value, ExecutorService executorService){
+    public KronosLibrary<K> createNewChainWithExecutorService(K value, ExecutorService executorService) {
         completableFuture = CompletableFuture.supplyAsync(() -> value, executorService);
         return this;
     }
@@ -66,8 +66,8 @@ public class KronosLibrary<K> {
         return this;
     }
 
-    public KronosLibrary<K> done(){
-        assertTrue(completableFuture.isDone());
+    public KronosLibrary<K> done() {
+        completableFuture.isDone();
         return this;
     }
 
