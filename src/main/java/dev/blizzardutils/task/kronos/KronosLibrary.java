@@ -5,9 +5,12 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+
+import static org.junit.Assert.assertTrue;
 
 public class KronosLibrary<K> {
 
@@ -15,6 +18,11 @@ public class KronosLibrary<K> {
 
     public KronosLibrary<K> createNewChain(K value) {
         completableFuture = CompletableFuture.supplyAsync(() -> value);
+        return this;
+    }
+
+    public KronosLibrary<K> createNewChainWithExecutorService(K value, ExecutorService executorService){
+        completableFuture = CompletableFuture.supplyAsync(() -> value, executorService);
         return this;
     }
 
@@ -55,6 +63,11 @@ public class KronosLibrary<K> {
 
     public KronosLibrary<K> whenCompleteAsync(BiConsumer<K, Throwable> biConsumer) {
         completableFuture.whenCompleteAsync(biConsumer);
+        return this;
+    }
+
+    public KronosLibrary<K> done(){
+        assertTrue(completableFuture.isDone());
         return this;
     }
 

@@ -24,7 +24,7 @@ public class ExamplePlugin extends JavaPlugin {
     private final Map<Enchantment, Integer> enchantMap = new ConcurrentHashMap<>();
 
 
-    public void onEnable(){
+    public void onEnable() {
 
     }
 
@@ -46,11 +46,7 @@ public class ExamplePlugin extends JavaPlugin {
             enchantMap.put(Enchantment.DURABILITY, 5);
             player.getInventory().addItem(ItemBuilder.Builder.getInstance().itemType(Material.SNOW_BALL).itemAmount(1).itemName(StringUtils.format("&6Snowball"))
                     .itemEnchant(enchantMap).itemLore(lore).buildWithEnchants());
-            kronosLibrary.createNewChain(null).runAsync(() -> {
-                player.sendMessage("This is an Async Task of Kronos Chain");
-            }).whenCompleteSync((aVoid, throwable) -> {
-                kronosLibrary.callBukkitSyncTask(this, () -> player.sendMessage("Now Running Bukkit Sync Task After Kronos Chain running async"));
-            });
+            kronosLibrary.createNewChain(null).runAsync(() -> player.sendMessage("This is an Async Task of Kronos Chain")).whenCompleteAsync((aVoid, throwable) -> kronosLibrary.callBukkitSyncTask(this, () -> player.sendMessage("Now Running Bukkit Sync Task After Kronos Chain running async")));
         }
         return true;
     }
