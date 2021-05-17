@@ -3,6 +3,7 @@ package dev.blizzardutils.example;
 import dev.blizzardutils.builder.ItemBuilder;
 import dev.blizzardutils.string.StringUtils;
 import dev.blizzardutils.task.kronos.KronosLibrary;
+import dev.blizzardutils.task.time.BenchMarkingUtilities;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiConsumer;
 
 public class ExamplePlugin extends JavaPlugin {
 
@@ -35,6 +35,7 @@ public class ExamplePlugin extends JavaPlugin {
             return true;
         }
 
+        BenchMarkingUtilities.initStartTime();
         if (command.getName().equalsIgnoreCase("iceutilsexample")) {
             Player player = (Player) sender;
             if (!player.isOp()) {
@@ -47,6 +48,7 @@ public class ExamplePlugin extends JavaPlugin {
             player.getInventory().addItem(ItemBuilder.Builder.getInstance().itemType(Material.SNOW_BALL).itemAmount(1).itemName(StringUtils.format("&6Snowball"))
                     .itemEnchant(enchantMap).itemLore(lore).buildWithEnchants());
             kronosLibrary.createNewChain(null).runAsync(() -> player.sendMessage("This is an Async Task of Kronos Chain")).whenCompleteAsync((aVoid, throwable) -> kronosLibrary.callBukkitSyncTask(this, () -> player.sendMessage("Now Running Bukkit Sync Task After Kronos Chain running async")));
+            BenchMarkingUtilities.getFinalResults(player);
         }
         return true;
     }

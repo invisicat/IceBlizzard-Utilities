@@ -3,14 +3,11 @@ package dev.blizzardutils.task.kronos;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-
-import static org.junit.Assert.assertTrue;
+import java.util.function.Function;
 
 public class KronosLibrary<K> {
 
@@ -46,6 +43,26 @@ public class KronosLibrary<K> {
         return this;
     }
 
+    public KronosLibrary<K> applySync(Function<? super K, ? extends K> function) {
+        completableFuture.thenApply(function);
+        return this;
+    }
+
+    public KronosLibrary<K> applyAsync(Function<? super K, ? extends K> function) {
+        completableFuture.thenApplyAsync(function);
+        return this;
+    }
+
+    public KronosLibrary<K> combineSync(CompletionStage<? extends K> completionStage, BiFunction<? super K, ? super K, ? extends K> biFunction) {
+        completableFuture.thenCombine(completionStage, biFunction);
+        return this;
+    }
+
+    public KronosLibrary<K> combineAsync(CompletionStage<? extends K> completionStage, BiFunction<? super K, ? super K, ? extends K> biFunction) {
+        completableFuture.thenCombineAsync(completionStage, biFunction);
+        return this;
+    }
+
     public KronosLibrary<K> runSync(Runnable runnable) {
         completableFuture.thenRun(runnable);
         return this;
@@ -66,8 +83,26 @@ public class KronosLibrary<K> {
         return this;
     }
 
+
+    public KronosLibrary<K> throwExceptionally(Function<Throwable, ? extends K> function) {
+        completableFuture.exceptionally(function);
+        return this;
+    }
+
+    public KronosLibrary<K> completeExceptionally(Throwable throwable) {
+        completableFuture.completeExceptionally(throwable);
+        return this;
+    }
+
+
+    public KronosLibrary<K> cancel() {
+        completableFuture.cancel(true);
+        done();
+        return this;
+    }
+
     public KronosLibrary<K> done() {
-        completableFuture.isDone();
+        assert completableFuture.isDone() : "Completable Future is not done running!";
         return this;
     }
 
