@@ -14,6 +14,11 @@ public class KronosLibrary<K> {
     private CompletableFuture<K> completableFuture;
 
     public KronosLibrary<K> createNewChain(K value) {
+        completableFuture = CompletableFuture.completedFuture(value);
+        return this;
+    }
+
+    public KronosLibrary<K> createNewChainSupplied(K value) {
         completableFuture = CompletableFuture.supplyAsync(() -> value);
         return this;
     }
