@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class KronosLibrary<K> {
+public class KronosLibrary<K>  {
 
     private CompletableFuture<K> completableFuture;
 
