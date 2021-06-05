@@ -1,5 +1,6 @@
 package dev.blizzardutils.string;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -9,11 +10,19 @@ public class StringUtils {
         return ChatColor.translateAlternateColorCodes('&', text);
     }
 
-    public static void sendFormattedMessage(Player player, String text) {
-        player.sendMessage(format(text));
+    public static void sendFormattedMessage(String message, Player player){
+        if(player != null){
+            player.sendMessage(format(message));
+        }else{
+            Bukkit.broadcastMessage(format(message));
+        }
     }
 
-    public static void sendCenteredFormattedMessage(Player player, String message) {
+    public static void sendFormattedMessage(String message){
+        sendFormattedMessage(message, null);
+    }
+
+    public static void sendCenteredFormattedMessage(String message, Player player) {
         int CENTER_PX = 154;
         if (message == null || message.equals("")) {
             player.sendMessage("");
@@ -50,7 +59,15 @@ public class StringUtils {
             sb.append(" ");
             compensated += spaceLength;
         }
+        if (player != null) {
+            player.sendMessage(sb.toString() + message);
+        } else {
+            Bukkit.broadcastMessage(sb.toString() + message);
+        }
+    }
 
-        player.sendMessage(sb.toString() + message);
+
+    public static void sendCenterFormattedMessage(String message) {
+        sendCenteredFormattedMessage(message, null);
     }
 }
