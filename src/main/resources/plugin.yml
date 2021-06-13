@@ -1,6 +1,6 @@
 name: IceBlizzardUtilities
 version: ${project.version}
-main: dev.blizzardutils.example.ExamplePlugin
+main: dev.blizzardutils.main.BlizzardUtilsMain
 commands:
   iceutilsexample:
     description: "Test cmd"

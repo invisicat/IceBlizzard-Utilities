@@ -1,4 +1,4 @@
-package dev.blizzardutils.task.time;
+package dev.blizzardutils.kronos;
 
 import dev.blizzardutils.string.StringUtils;
 import org.bukkit.entity.Player;
