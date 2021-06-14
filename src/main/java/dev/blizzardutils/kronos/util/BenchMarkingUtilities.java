@@ -1,4 +1,4 @@
-package dev.blizzardutils.kronos;
+package dev.blizzardutils.kronos.util;
 
 import dev.blizzardutils.string.StringUtils;
 import org.bukkit.entity.Player;
