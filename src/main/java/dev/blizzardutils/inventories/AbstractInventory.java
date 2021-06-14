@@ -1,12 +1,18 @@
 package dev.blizzardutils.inventories;
 
+import org.bukkit.entity.Player;
+
 public interface AbstractInventory {
 
     void create();
 
     void addItems();
 
-    void open();
+    void open(Player player);
 
-    void register();
+    default void register(Player player) {
+        create();
+        addItems();
+        open(player);
+    }
 }

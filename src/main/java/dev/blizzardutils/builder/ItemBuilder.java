@@ -29,6 +29,7 @@ public class ItemBuilder {
         private Map<Enchantment, Integer> enchantmentMap;
 
         public static synchronized Builder getInstance() {
+
             if (instance == null) instance = new Builder();
             return instance;
         }
